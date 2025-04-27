@@ -1,3 +1,4 @@
+-- ! Debate if you want to use this or if you want to setup test data like in https://spring.io/guides/gs/accessing-data-jpa
 -- Create a table
 CREATE TABLE Users (
     id INT PRIMARY KEY,
