@@ -1,4 +1,4 @@
-package com.example.theaa;
+package com.example.theaa.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Vehicle {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) // ? Or should it be IDENTITY?
     private Long id;
     private String model;
     private String vrn;
