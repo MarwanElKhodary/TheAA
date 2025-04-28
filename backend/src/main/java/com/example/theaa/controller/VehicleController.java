@@ -2,7 +2,7 @@ package com.example.theaa.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +16,6 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    @Autowired // ? Is this needed
     public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
     }
