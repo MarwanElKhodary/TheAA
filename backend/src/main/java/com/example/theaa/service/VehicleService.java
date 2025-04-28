@@ -20,6 +20,10 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
+    public Vehicle createVehicle(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
+    }
+
     // public Optional<Vehicle> getVehicleById(Long id) {
     // return vehicleRepository.findById(id);
     // }
