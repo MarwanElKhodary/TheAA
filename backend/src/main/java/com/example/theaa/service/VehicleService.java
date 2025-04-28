@@ -24,6 +24,10 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+    public void deactivateVehicle(Long id) {
+        vehicleRepository.deleteById(id);
+    }
+
     // public Optional<Vehicle> getVehicleById(Long id) {
     // return vehicleRepository.findById(id);
     // }
