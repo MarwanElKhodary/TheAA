@@ -36,14 +36,6 @@ public class VehicleService {
     // return vehicleRepository.findByVrn(vrn);
     // }
 
-    // public Vehicle saveVehicle(Vehicle vehicle) {
-    // return vehicleRepository.save(vehicle);
-    // }
-
-    // public void deleteVehicle(Long id) {
-    // vehicleRepository.deleteById(id);
-    // }
-
     // TODO: Implement
     // public void addPart(Part part) {
 

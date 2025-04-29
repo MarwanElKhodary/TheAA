@@ -1,11 +1,15 @@
 package com.example.theaa.entity;
 
-// import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Vehicle {
@@ -15,8 +19,12 @@ public class Vehicle {
     private Long id;
     private String model;
     private String vrn;
-    // TODO: Implement
-    // private List<Part> parts;
+
+    @ManyToMany
+    @JoinTable(name = "vehicle_fault", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "fault_id"))
+    Set<Fault> faults = new HashSet<>();
+
+    // *** CONSTRUCTORS ***
 
     // JPA requires a no-args constructor to create entities when loading from the
     // database
@@ -28,10 +36,7 @@ public class Vehicle {
         this.vrn = vrn;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Vehicle[id=%d, model='%s', lastName='%s']", id, model, vrn);
-    }
+    // *** GETTERS AND SETTERS ***
 
     public Long getId() {
         return id;
@@ -43,5 +48,16 @@ public class Vehicle {
 
     public String getVrn() {
         return vrn;
+    }
+
+    public Set<Fault> getFaults() {
+        return faults;
+    }
+
+    // *** METHODS ***
+
+    @Override
+    public String toString() {
+        return String.format("Vehicle[id=%d, model='%s', lastName='%s']", id, model, vrn);
     }
 }
