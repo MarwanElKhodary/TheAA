@@ -1,7 +1,6 @@
 package com.example.theaa.entity;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class Fault {
     // Could add code, detectedAt, lastSeen, status
 
     @ManyToMany(mappedBy = "faults")
-    Set<Vehicle> vehicles = new HashSet<>();
+    HashSet<Vehicle> vehicles = new HashSet<Vehicle>();
 
     // *** CONSTRUCTORS ***
 

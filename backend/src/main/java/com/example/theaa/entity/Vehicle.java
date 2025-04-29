@@ -1,7 +1,6 @@
 package com.example.theaa.entity;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +21,7 @@ public class Vehicle {
 
     @ManyToMany
     @JoinTable(name = "vehicle_fault", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "fault_id"))
-    Set<Fault> faults = new HashSet<>();
+    HashSet<Fault> faults = new HashSet<Fault>();
 
     // *** CONSTRUCTORS ***
 
@@ -50,7 +49,7 @@ public class Vehicle {
         return vrn;
     }
 
-    public Set<Fault> getFaults() {
+    public HashSet<Fault> getFaults() {
         return faults;
     }
 
