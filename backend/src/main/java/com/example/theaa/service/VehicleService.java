@@ -2,6 +2,7 @@ package com.example.theaa.service;
 
 import java.util.List;
 // import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -28,16 +29,12 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
     }
 
+    public Optional<Vehicle> getVehicleByVrn(String vrn) {
+        return vehicleRepository.findByVrn(vrn);
+    }
+
     // public Optional<Vehicle> getVehicleById(Long id) {
     // return vehicleRepository.findById(id);
     // }
 
-    // public Optional<Vehicle> getVehicleByVrn(String vrn) {
-    // return vehicleRepository.findByVrn(vrn);
-    // }
-
-    // TODO: Implement
-    // public void addPart(Part part) {
-
-    // }
 }

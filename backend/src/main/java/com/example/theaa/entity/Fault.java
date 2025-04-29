@@ -1,6 +1,7 @@
 package com.example.theaa.entity;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +19,10 @@ public class Fault {
     private String severity; // ? Could be an enum
     // Could add code, detectedAt, lastSeen, status
 
+    // ? Need to read more about this:
+    // https://stackoverflow.com/questions/76955457/can-not-set-java-util-hashset-field-to-org-hibernate-collection-spi-persistentse
     @ManyToMany(mappedBy = "faults")
-    HashSet<Vehicle> vehicles = new HashSet<Vehicle>();
+    private Set<Vehicle> vehicles = new HashSet<>();
 
     // *** CONSTRUCTORS ***
 

@@ -14,8 +14,13 @@
 ## Questions
 
 - Read into Jackson (Spring's default JSON serializer), apparently it requires getters to access the properties to include them in the response
+- Should I be using `this` when referencing instance variables?
 
 ## Assumptions
 
 - Deactivating a vehicle simply means deleting the vehicle from the database. In a production environment, there might be a deactivated vehicles database instead, with features of reactivation.
   - But maybe it should be just an activated boolean value instead - grey it out on the frontend when its deactivated or add a column for it instead of deleting it, ignoring for now
+- Issuing faults happen one at a time, no bulk faults
+- Messages coming into the queue are processed FIFO
+- Assuming we don't have to worry about race conditions at this stagE
+- Faults are processed in a queue right away

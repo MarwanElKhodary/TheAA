@@ -1,6 +1,7 @@
 package com.example.theaa.entity;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,9 +20,11 @@ public class Vehicle {
     private String model;
     private String vrn;
 
+    // ? Need to read more about this:
+    // https://stackoverflow.com/questions/76955457/can-not-set-java-util-hashset-field-to-org-hibernate-collection-spi-persistentse
     @ManyToMany
     @JoinTable(name = "vehicle_fault", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "fault_id"))
-    HashSet<Fault> faults = new HashSet<Fault>();
+    private Set<Fault> faults = new HashSet<>();
 
     // *** CONSTRUCTORS ***
 
@@ -49,7 +52,7 @@ public class Vehicle {
         return vrn;
     }
 
-    public HashSet<Fault> getFaults() {
+    public Set<Fault> getFaults() {
         return faults;
     }
 
