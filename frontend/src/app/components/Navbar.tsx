@@ -1,5 +1,3 @@
-"use client";
-
 export default function Navbar() {
 	return (
 		<nav className="bg-yellow-500 text-black shadow-md">

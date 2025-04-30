@@ -1,3 +1,4 @@
+// TODO: Investigate what's option and what's not later
 export type HealthStatus =
 	| "Up to Date"
 	| "Action Soon"
@@ -11,7 +12,7 @@ export interface Vehicle {
 	id?: number;
 	model: string;
 	vrn: string;
-	healthStatus?: HealthStatus;
+	healthStatus: HealthStatus;
 	faults?: Fault[];
 }
 

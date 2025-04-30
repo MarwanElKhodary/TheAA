@@ -1,6 +1,5 @@
-"use client";
-
-import { vehicles } from "@/app/lib/placeholder-data";
+import { testVehicles } from "@/app/lib/placeholder-data";
+import { Vehicle, HealthStatus } from "@/app/lib/types";
 
 // TODO: Display number of faults as a column
 // TODO: Implement Add New Vehicle
@@ -11,6 +10,23 @@ import { vehicles } from "@/app/lib/placeholder-data";
 // ? Should numFaults be calculated in the backend or front end? Probably backend
 
 export default function VehicleListView() {
+	const vehicles: Vehicle[] = testVehicles;
+
+	const getHealthStatusColor = (status: HealthStatus): string => {
+		switch (status) {
+			case "Up to Date":
+				return "bg-green-100 text-green-800";
+			case "Action Soon":
+				return "bg-yellow-100 text-yellow-800";
+			case "Action Now":
+				return "bg-orange-100 text-orange-800";
+			case "Off the Road":
+				return "bg-red-100 text-red-800";
+			default:
+				return "bg-gray-100 text-gray-800";
+		}
+	};
+
 	return (
 		<div className="space-y-8">
 			<div className="flex justify-between items-center">
@@ -54,16 +70,9 @@ export default function VehicleListView() {
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap">
 										{/* TODO: This should be a component too */}
+										{/* TODO: Check if "as blah" is normal */}
 										<span
-											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-												vehicle.healthStatus === "Up to Date"
-													? "bg-green-100 text-green-800"
-													: vehicle.healthStatus === "Action Soon"
-														? "bg-yellow-100 text-yellow-800"
-														: vehicle.healthStatus === "Action Now"
-															? "bg-orange-100 text-orange-800"
-															: "bg-red-100 text-red-800"
-											}`}>
+											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getHealthStatusColor(vehicle.healthStatus as HealthStatus)}`}>
 											{vehicle.healthStatus}
 										</span>
 									</td>
