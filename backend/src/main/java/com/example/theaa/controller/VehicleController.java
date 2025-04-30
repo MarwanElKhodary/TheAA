@@ -37,6 +37,7 @@ public class VehicleController {
 
     // ? Why would we delete by id like this instead of just submitting the vehicle
     // ? in the request body like above?
+    // TODO: Change this to be by VRN instead
     // ! Response is just 200 ok for now
     @DeleteMapping("/vehicles/{id}")
     public void deactivateVehicle(@PathVariable Long id) {
