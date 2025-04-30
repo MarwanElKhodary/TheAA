@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/ui/globals.css";
-import Navbar from "@/app/ui/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 // ? Do I need two fonts?
 const geistSans = Geist({

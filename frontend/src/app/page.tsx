@@ -1,4 +1,4 @@
-import VehicleListView from "@/app/ui/VehicleListView";
+import VehicleListView from "@/app/components/VehicleListView";
 
 export default function Home() {
 	return (
