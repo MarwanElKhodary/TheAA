@@ -33,6 +33,13 @@ public class VehicleService {
         return vehicleRepository.findByVrn(vrn);
     }
 
+    // ? You can't pass this instance in the parameter?
+    // TODO: Read and check if .save can be used to update like this
+    // https://stackoverflow.com/questions/11881479/how-do-i-update-an-entity-using-spring-data-jpa
+    public Vehicle updateVehicleHealthStatus(Vehicle vehicle) {
+        vehicle.updateHealthStatus();
+        return vehicleRepository.save(vehicle);
+    }
     // public Optional<Vehicle> getVehicleById(Long id) {
     // return vehicleRepository.findById(id);
     // }

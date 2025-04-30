@@ -3,7 +3,11 @@ package com.example.theaa.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.theaa.enums.FaultSeverity;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +20,9 @@ public class Fault {
     private Long id;
 
     private String description;
-    private String severity; // ? Could be an enum
+
+    @Enumerated(EnumType.STRING)
+    private FaultSeverity severity;
     // Could add code, detectedAt, lastSeen, status
 
     // ? Need to read more about this:
@@ -31,7 +37,7 @@ public class Fault {
     protected Fault() {
     }
 
-    public Fault(String description, String severity) {
+    public Fault(String description, FaultSeverity severity) {
         this.description = description;
         this.severity = severity;
     }
@@ -46,7 +52,7 @@ public class Fault {
         return description;
     }
 
-    public String getSeverity() {
+    public FaultSeverity getSeverity() {
         return severity;
     }
 

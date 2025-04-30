@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.theaa.dto.FaultReportDto;
 import com.example.theaa.entity.Fault;
 import com.example.theaa.entity.Vehicle;
+import com.example.theaa.enums.FaultSeverity;
 import com.example.theaa.service.FaultService;
 import com.example.theaa.service.VehicleService;
 
@@ -32,16 +33,19 @@ public class FaultController {
     @PostMapping("/faults")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vehicle> reportFault(@RequestBody FaultReportDto report) {
-        // TODO: Rework to throw some kind of response error
+        // TODO: Think over error handling
+        if (report.getVrn() == null || report.getVrn().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // TODO: Refactor this line
         Vehicle vehicle = vehicleService.getVehicleByVrn(report.getVrn()).orElse(new Vehicle("", ""));
-        Fault fault = new Fault(report.getDescription(), report.getSeverity());
+        Fault fault = new Fault(report.getDescription(), FaultSeverity.fromString(report.getSeverity()));
+
         vehicle.getFaults().add(fault);
         faultService.reportFault(fault);
 
-        // TODO: This works, but debate if there needs to be an updateVehicle method
-        Vehicle updatedVehicle = vehicleService.createVehicle(vehicle);
-
-        return new ResponseEntity<>(updatedVehicle, HttpStatus.CREATED);
+        return new ResponseEntity<>(vehicleService.updateVehicleHealthStatus(vehicle), HttpStatus.CREATED);
     }
 
 }

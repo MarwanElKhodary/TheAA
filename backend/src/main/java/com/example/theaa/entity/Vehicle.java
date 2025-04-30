@@ -3,7 +3,12 @@ package com.example.theaa.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.theaa.enums.FaultSeverity;
+import com.example.theaa.enums.HealthStatus;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +24,10 @@ public class Vehicle {
     private Long id;
     private String model;
     private String vrn;
+    // ? Maybe this is an enum
+    // Maybe health status can be Action Now, Action Soon, Off the Road, or Up to
+    @Enumerated(EnumType.STRING)
+    private HealthStatus healthStatus;
 
     // ? Need to read more about this:
     // https://stackoverflow.com/questions/76955457/can-not-set-java-util-hashset-field-to-org-hibernate-collection-spi-persistentse
@@ -26,11 +35,12 @@ public class Vehicle {
     @JoinTable(name = "vehicle_fault", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "fault_id"))
     private Set<Fault> faults = new HashSet<>();
 
+    // private int numFaults =
+
     // *** CONSTRUCTORS ***
 
-    // JPA requires a no-args constructor to create entities when loading from the
-    // database
     protected Vehicle() {
+        this.healthStatus = HealthStatus.UP_TO_DATE;
     }
 
     public Vehicle(String model, String vrn) {
@@ -56,10 +66,45 @@ public class Vehicle {
         return faults;
     }
 
+    // ? Should this be a string or convert on the front end?
+    public String getHealthStatus() {
+        return healthStatus.toString();
+    }
+
     // *** METHODS ***
 
     @Override
     public String toString() {
         return String.format("Vehicle[id=%d, model='%s', lastName='%s']", id, model, vrn);
+    }
+
+    // TODO: Research if there's a better way of doing this
+    // TODO: Move magic numbers
+    public void updateHealthStatus() {
+        if (faults.isEmpty()) {
+            this.healthStatus = HealthStatus.UP_TO_DATE;
+            return;
+        }
+
+        int highCount = 0;
+        int mediumCount = 0;
+
+        for (Fault fault : faults) {
+            if (fault.getSeverity() == FaultSeverity.HIGH) {
+                highCount++;
+            } else if (fault.getSeverity() == FaultSeverity.MEDIUM) {
+                mediumCount++;
+            }
+        }
+
+        if (highCount >= 3) {
+            this.healthStatus = HealthStatus.OFF_THE_ROAD;
+        } else if (highCount > 0) {
+            this.healthStatus = HealthStatus.ACTION_NOW;
+        } else if (mediumCount > 0) {
+            this.healthStatus = HealthStatus.ACTION_SOON;
+        } else {
+            this.healthStatus = HealthStatus.UP_TO_DATE;
+        }
     }
 }
