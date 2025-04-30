@@ -15,6 +15,7 @@ export default function VehicleListView() {
 		<div className="space-y-8">
 			<div className="flex justify-between items-center">
 				<h1 className="text-2xl font-bold">Vehicle List View</h1>
+				{/* TODO: Should probably be its own component too */}
 				<div
 					// href="/vehicles/new"
 					className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">
@@ -36,6 +37,9 @@ export default function VehicleListView() {
 								Health Status
 							</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+								Number of Faults
+							</th>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								Actions
 							</th>
 						</tr>
@@ -49,6 +53,7 @@ export default function VehicleListView() {
 										{vehicle.model}
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap">
+										{/* TODO: This should be a component too */}
 										<span
 											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
 												vehicle.healthStatus === "Up to Date"
@@ -63,10 +68,13 @@ export default function VehicleListView() {
 										</span>
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap">
+										{vehicle.faults ? vehicle.faults.length : 0}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap">
 										<div
 											// href={`/vehicles/${vehicle.id}`}
 											className="text-blue-600 hover:text-blue-900 mr-4">
-											View
+											View Details
 										</div>
 										<div
 											// href={`/faults/new?vrn=${vehicle.vrn}`}
