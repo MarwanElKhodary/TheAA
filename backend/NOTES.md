@@ -24,3 +24,4 @@
 - Messages coming into the queue are processed FIFO
 - Assuming we don't have to worry about race conditions at this stagE
 - Faults are processed in a queue right away
+- No internalization for strings
