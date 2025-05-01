@@ -6,11 +6,10 @@ import { deactivateVehicle, createVehicle } from "@/app/lib/api";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import VehicleDetails from "@/app/components/VehicleDetails";
 import { useVehicles } from "@/app/hooks/api-hooks";
+import React from "react";
 
-// TODO: Implement View Vehicle
 // ? Should colours be all over the place like this?
 // ? Should each component be its own row?
-// ? Should numFaults be calculated in the backend or front end? Probably backend
 
 export default function VehicleListView() {
 	const [isDeactivating, setIsDeactivating] = useState(false);
@@ -130,9 +129,9 @@ export default function VehicleListView() {
 					<tbody className="bg-white divide-y divide-gray-200">
 						{vehicles && vehicles.length > 0 ? (
 							vehicles.map((vehicle: Vehicle) => (
-								// ! This is causing a "Each child in a list should have a unique "key" prop." error
-								<>
-									<tr key={vehicle.id}>
+								// ? What's the point of using React.Fragment here?
+								<React.Fragment key={vehicle.id}>
+									<tr>
 										<td className="px-6 py-4 whitespace-nowrap">
 											{vehicle.vrn}
 										</td>
@@ -184,7 +183,7 @@ export default function VehicleListView() {
 											isExpanded={expandedVehicleId === vehicle.id}
 										/>
 									)}
-								</>
+								</React.Fragment>
 							))
 						) : (
 							<tr>
