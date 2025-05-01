@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// TODO: Read more about CORS here: https://spring.io/guides/gs/rest-service-cors
-
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override
