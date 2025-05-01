@@ -15,7 +15,7 @@ import React from "react";
 // ? Should each component be its own row?
 
 export default function VehicleListView() {
-	// ? Go over all these useStates to try and understand
+	// ? Go over all these useStates to try and understand why id could be null?
 	const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
 		null
 	);
@@ -50,7 +50,7 @@ export default function VehicleListView() {
 		createVehicle(vehicleData);
 	};
 
-	// TODO: Look over this function
+	// TODO: Look over this function, specifically why would id ever be undefined?
 	const toggleVehicleDetails = (id: number | undefined) => {
 		if (!id) return;
 		setExpandedVehicleId(expandedVehicleId === id ? null : id);

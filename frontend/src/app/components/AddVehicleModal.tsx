@@ -6,7 +6,7 @@ import { Vehicle } from "@/app/lib/types";
 interface AddVehicleModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	onSubmit: (vehicleData: Vehicle) => Promise<void>; // ? Again, what's this Omit?
+	onSubmit: (vehicleData: Vehicle) => Promise<void>;
 }
 
 // TODO: Provide the user some notification of some sort that the vehicle has been created
@@ -18,10 +18,8 @@ export default function AddVehicleModal({
 }: AddVehicleModalProps) {
 	const [vrn, setVrn] = useState("");
 	const [model, setModel] = useState("");
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState("");
 
-	// Reset form when modal closes
 	const handleClose = () => {
 		setVrn("");
 		setModel("");
@@ -43,7 +41,6 @@ export default function AddVehicleModal({
 		}
 
 		try {
-			setIsSubmitting(true);
 			setError("");
 
 			await onSubmit({
@@ -54,8 +51,6 @@ export default function AddVehicleModal({
 			handleClose();
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Failed to add vehicle");
-		} finally {
-			setIsSubmitting(false);
 		}
 	};
 
@@ -118,15 +113,13 @@ export default function AddVehicleModal({
 						<button
 							type="button"
 							onClick={handleClose}
-							className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 cursor-pointer"
-							disabled={isSubmitting}>
+							className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 cursor-pointer">
 							Cancel
 						</button>
 						<button
 							type="submit"
-							className="px-4 py-2 [background-color:var(--brand-yellow)] hover:bg-yellow-300 text-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-progress"
-							disabled={isSubmitting}>
-							{isSubmitting ? "Adding..." : "Add Vehicle"}
+							className="px-4 py-2 [background-color:var(--brand-yellow)] hover:bg-yellow-300 text-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-progress">
+							Add Vehicle
 						</button>
 					</div>
 				</form>
