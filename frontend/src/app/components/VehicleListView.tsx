@@ -11,9 +11,6 @@ import {
 } from "@/app/hooks/api";
 import React from "react";
 
-// ? Should colours be all over the place like this?
-// ? Should each component be its own row?
-
 export default function VehicleListView() {
 	// ? Go over all these useStates to try and understand why id could be null?
 	const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
@@ -21,7 +18,6 @@ export default function VehicleListView() {
 	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	//TODO: Remove refetch after reworking deactivateVehicle
 	const { data: vehicles, isLoading, isError, error } = useVehicles();
 
 	const { mutate: deactivateVehicle } = useDeactivateVehicle({
@@ -69,7 +65,6 @@ export default function VehicleListView() {
 		<div className="space-y-8">
 			<div className="flex justify-between items-center">
 				<h1 className="text-2xl font-bold">Vehicle List View</h1>
-				{/* TODO: Should probably be its own component too */}
 				<div
 					onClick={() => setIsModalOpen(true)}
 					className="[background-color:var(--brand-yellow)] hover:bg-yellow-300 text-black px-4 py-2 rounded shadow cursor-pointer">

@@ -9,8 +9,6 @@ interface AddVehicleModalProps {
 	onSubmit: (vehicleData: Vehicle) => Promise<void>;
 }
 
-// TODO: Provide the user some notification of some sort that the vehicle has been created
-
 export default function AddVehicleModal({
 	isOpen,
 	onClose,
