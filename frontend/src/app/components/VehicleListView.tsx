@@ -1,7 +1,7 @@
 "use client";
 
 import { Vehicle } from "@/app/lib/types";
-import { useState } from "react";
+import React, { useState } from "react";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import VehicleRow from "@/app/components/VehicleRow";
 import {
@@ -9,10 +9,8 @@ import {
 	useDeactivateVehicle,
 	useVehicles,
 } from "@/app/hooks/api";
-import React from "react";
 
 export default function VehicleListView() {
-	// ? Go over all these useStates to try and understand why id could be null?
 	const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
 		null
 	);
