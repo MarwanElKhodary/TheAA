@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+// ! None of these apis throw logs when being hit I think currently
+
 @RestController
 public class VehicleController {
 

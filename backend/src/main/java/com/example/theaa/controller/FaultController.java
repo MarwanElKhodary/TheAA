@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+//TODO: Rework this whole class. 
+
 @RestController
 public class FaultController {
 
@@ -38,7 +40,7 @@ public class FaultController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // TODO: Refactor this line
+        // TODO: Refactor this line, to use 404 error
         Vehicle vehicle = vehicleService.getVehicleByVrn(report.getVrn()).orElse(new Vehicle("", ""));
         Fault fault = new Fault(report.getDescription(), FaultSeverity.fromString(report.getSeverity()));
 
