@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/ui/globals.css";
 import Navbar from "@/app/components/Navbar";
+import { TanstackProvider } from "@/app/lib/providers";
 
 // ? Do I need two fonts?
 const geistSans = Geist({
@@ -29,9 +30,11 @@ export default function RootLayout({
 			{/* ? What does this line do? */}
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<TanstackProvider>
+					<Navbar />
+					<main className="container mx-auto py-8 px-4">{children}</main>
+				</TanstackProvider>
 				{/* ! Using colors like this bad */}
-				<Navbar />
-				<main className="container mx-auto py-8 px-4">{children}</main>
 			</body>
 		</html>
 	);
