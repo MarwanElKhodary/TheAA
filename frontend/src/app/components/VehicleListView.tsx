@@ -20,6 +20,7 @@ export default function VehicleListView() {
 
 	const { data: vehicles, isLoading, isError, error, refetch } = useVehicles();
 
+	// TODO: Refactor to use hooks
 	const handleDeactivateVehicle = async (id: number) => {
 		if (!id) return;
 
@@ -37,6 +38,7 @@ export default function VehicleListView() {
 		}
 	};
 
+	// TODO: Refactor to use hooks
 	const handleAddVehicle = async (vehicleData: Vehicle) => {
 		await createVehicle(vehicleData);
 		refetch();
