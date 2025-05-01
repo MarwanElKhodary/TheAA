@@ -26,8 +26,6 @@ public class FaultController {
         this.vehicleService = vehicleService;
     }
 
-    // ? What are response entities?
-    // ? Are response status needed if it's in the body? In case we want to throw
     // TODO: Rework this whole method to be in service class - if that makes sense
     // created or an error
     @PostMapping("/faults")

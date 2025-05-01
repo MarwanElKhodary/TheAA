@@ -24,18 +24,13 @@ public class Vehicle {
     private Long id;
     private String model;
     private String vrn;
-    // ? Maybe this is an enum
-    // Maybe health status can be Action Now, Action Soon, Off the Road, or Up to
+
     @Enumerated(EnumType.STRING)
     private HealthStatus healthStatus;
 
-    // ? Need to read more about this:
-    // https://stackoverflow.com/questions/76955457/can-not-set-java-util-hashset-field-to-org-hibernate-collection-spi-persistentse
     @ManyToMany
     @JoinTable(name = "vehicle_fault", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "fault_id"))
     private Set<Fault> faults = new HashSet<>();
-
-    // private int numFaults =
 
     // *** CONSTRUCTORS ***
 
@@ -66,17 +61,11 @@ public class Vehicle {
         return faults;
     }
 
-    // ? Should this be a string or convert on the front end?
     public String getHealthStatus() {
         return healthStatus.toString();
     }
 
     // *** METHODS ***
-
-    @Override
-    public String toString() {
-        return String.format("Vehicle[id=%d, model='%s', lastName='%s']", id, model, vrn);
-    }
 
     // TODO: Research if there's a better way of doing this
     // TODO: Move magic numbers

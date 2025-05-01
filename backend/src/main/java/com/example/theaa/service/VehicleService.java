@@ -1,7 +1,6 @@
 package com.example.theaa.service;
 
 import java.util.List;
-// import java.util.Optional;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -40,8 +39,5 @@ public class VehicleService {
         vehicle.updateHealthStatus();
         return vehicleRepository.save(vehicle);
     }
-    // public Optional<Vehicle> getVehicleById(Long id) {
-    // return vehicleRepository.findById(id);
-    // }
 
 }

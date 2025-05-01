@@ -1,7 +1,5 @@
 package com.example.theaa.enums;
 
-// TODO: Refactor with HealthStatus, very repetitive
-
 public enum FaultSeverity {
     LOW("Low"),
     MEDIUM("Medium"),

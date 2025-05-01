@@ -1,5 +1,7 @@
 import { FaultSeverity } from "@/app/lib/types";
 
+//TODO: Refactor this and HealthStatusBadge to just be Badge and you can pass in the status and move to ui folder
+
 interface FaultSeverityBadgeProps {
 	severity: FaultSeverity;
 }

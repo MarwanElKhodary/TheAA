@@ -23,10 +23,7 @@ public class Fault {
 
     @Enumerated(EnumType.STRING)
     private FaultSeverity severity;
-    // Could add code, detectedAt, lastSeen, status
 
-    // ? Need to read more about this:
-    // https://stackoverflow.com/questions/76955457/can-not-set-java-util-hashset-field-to-org-hibernate-collection-spi-persistentse
     @ManyToMany(mappedBy = "faults")
     private Set<Vehicle> vehicles = new HashSet<>();
 
