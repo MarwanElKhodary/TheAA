@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { Vehicle } from "@/app/lib/types";
 import VehicleDetails from "@/app/components/VehicleDetails";
