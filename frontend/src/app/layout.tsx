@@ -4,7 +4,6 @@ import "@/app/ui/globals.css";
 import Navbar from "@/app/components/Navbar";
 import { TanstackProvider } from "@/app/lib/providers";
 
-// ? Do I need two fonts?
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -27,14 +26,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			{/* ? What does this line do? */}
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<TanstackProvider>
 					<Navbar />
 					<main className="container mx-auto py-8 px-4">{children}</main>
 				</TanstackProvider>
-				{/* ! Using colors like this bad */}
 			</body>
 		</html>
 	);
