@@ -1,11 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-// ? Why is this type not used? Only reason this type is used is becuase of the funciton
-// import { Vehicle, HealthStatus } from "@/app/lib/types";
-import { HealthStatus } from "@/app/lib/types";
+import { Vehicle, HealthStatus } from "@/app/lib/types";
 import { useState } from "react";
-import { getVehicles, deactivateVehicle } from "../lib/api";
+import { deactivateVehicle, createVehicle } from "@/app/lib/api";
+import AddVehicleModal from "@/app/components/AddVehicleModal";
+import { useVehicles } from "../hooks/api-hooks";
 
 // TODO: Display number of faults as a column
 // TODO: Implement Add New Vehicle
@@ -20,17 +19,9 @@ export default function VehicleListView() {
 	const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
 		null
 	);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const {
-		data: vehicles,
-		isLoading,
-		isError,
-		error,
-		refetch,
-	} = useQuery({
-		queryKey: ["vehicles"],
-		queryFn: getVehicles,
-	});
+	const { data: vehicles, isLoading, isError, error, refetch } = useVehicles();
 
 	const handleDeactivateVehicle = async (id: number) => {
 		if (!id) return;
@@ -47,6 +38,11 @@ export default function VehicleListView() {
 			setIsDeactivating(false);
 			setSelectedVehicleId(null);
 		}
+	};
+
+	const handleAddVehicle = async (vehicleData: Omit<Vehicle, "id">) => {
+		await createVehicle(vehicleData);
+		refetch();
 	};
 
 	const getHealthStatusColor = (status: HealthStatus): string => {
@@ -94,7 +90,7 @@ export default function VehicleListView() {
 				<h1 className="text-2xl font-bold">Vehicle List View</h1>
 				{/* TODO: Should probably be its own component too */}
 				<div
-					// href="/vehicles/new"
+					onClick={() => setIsModalOpen(true)}
 					className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow cursor-pointer">
 					Add New Vehicle
 				</div>
@@ -123,7 +119,7 @@ export default function VehicleListView() {
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
 						{vehicles && vehicles.length > 0 ? (
-							vehicles.map((vehicle) => (
+							vehicles.map((vehicle: Vehicle) => (
 								<tr key={vehicle.id}>
 									<td className="px-6 py-4 whitespace-nowrap">{vehicle.vrn}</td>
 									<td className="px-6 py-4 whitespace-nowrap">
@@ -173,6 +169,12 @@ export default function VehicleListView() {
 					</tbody>
 				</table>
 			</div>
+
+			<AddVehicleModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				onSubmit={handleAddVehicle}
+			/>
 		</div>
 	);
 }
