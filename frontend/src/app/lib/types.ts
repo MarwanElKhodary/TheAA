@@ -6,7 +6,7 @@ export type HealthStatus =
 	| "Action Now"
 	| "Off the Road";
 
-export type FaultSeverity = "Low" | "Medium" | "High";
+export type FaultSeverity = "LOW" | "MEDIUM" | "HIGH";
 
 // ? What's the difference between types and interfaces?
 export interface Vehicle {

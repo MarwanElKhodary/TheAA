@@ -4,7 +4,8 @@ import { Vehicle, HealthStatus } from "@/app/lib/types";
 import { useState } from "react";
 import { deactivateVehicle, createVehicle } from "@/app/lib/api";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
-import { useVehicles } from "../hooks/api-hooks";
+import VehicleDetails from "@/app/components/VehicleDetails";
+import { useVehicles } from "@/app/hooks/api-hooks";
 
 // TODO: Implement View Vehicle
 // ? Should colours be all over the place like this?
@@ -17,6 +18,9 @@ export default function VehicleListView() {
 		null
 	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [expandedVehicleId, setExpandedVehicleId] = useState<number | null>(
+		null
+	);
 
 	const { data: vehicles, isLoading, isError, error, refetch } = useVehicles();
 
@@ -42,6 +46,12 @@ export default function VehicleListView() {
 	const handleAddVehicle = async (vehicleData: Vehicle) => {
 		await createVehicle(vehicleData);
 		refetch();
+	};
+
+	// TODO: Look over this function
+	const toggleVehicleDetails = (id: number | undefined) => {
+		if (!id) return;
+		setExpandedVehicleId(expandedVehicleId === id ? null : id);
 	};
 
 	const getHealthStatusColor = (status: HealthStatus): string => {
@@ -120,44 +130,61 @@ export default function VehicleListView() {
 					<tbody className="bg-white divide-y divide-gray-200">
 						{vehicles && vehicles.length > 0 ? (
 							vehicles.map((vehicle: Vehicle) => (
-								<tr key={vehicle.id}>
-									<td className="px-6 py-4 whitespace-nowrap">{vehicle.vrn}</td>
-									<td className="px-6 py-4 whitespace-nowrap">
-										{vehicle.model}
-									</td>
-									<td className="px-6 py-4 whitespace-nowrap">
-										{/* TODO: This should be a component too */}
-										{/* TODO: Check if "as blah" is normal */}
-										<span
-											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getHealthStatusColor(vehicle.healthStatus as HealthStatus)}`}>
-											{vehicle.healthStatus}
-										</span>
-									</td>
-									<td className="px-6 py-4 whitespace-nowrap">
-										{vehicle.faults ? vehicle.faults.length : 0}
-									</td>
-									<td className="px-6 py-4 whitespace-nowrap flex space-x-4">
-										<button className="text-blue-600 hover:text-blue-900 cursor-pointer">
-											View Details
-										</button>
-										<button
-											onClick={() =>
-												vehicle.id && handleDeactivateVehicle(vehicle.id)
-											}
-											disabled={
-												isDeactivating && selectedVehicleId === vehicle.id
-											}
-											className={`text-yellow-600 hover:text-yellow-900 ${
-												isDeactivating && selectedVehicleId === vehicle.id
-													? "opacity-50 cursor-not-allowed"
-													: "cursor-pointer"
-											}`}>
-											{isDeactivating && selectedVehicleId === vehicle.id
-												? "Deactivating..."
-												: "Deactivate Vehicle"}
-										</button>
-									</td>
-								</tr>
+								// ? I know this is a react fragment but why is it used here like this?
+								<>
+									<tr key={vehicle.id}>
+										<td className="px-6 py-4 whitespace-nowrap">
+											{vehicle.vrn}
+										</td>
+										<td className="px-6 py-4 whitespace-nowrap">
+											{vehicle.model}
+										</td>
+										<td className="px-6 py-4 whitespace-nowrap">
+											{/* TODO: This should be a component too */}
+											{/* TODO: Check if "as blah" is normal */}
+											<span
+												className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getHealthStatusColor(vehicle.healthStatus as HealthStatus)}`}>
+												{vehicle.healthStatus}
+											</span>
+										</td>
+										<td className="px-6 py-4 whitespace-nowrap">
+											{vehicle.faults ? vehicle.faults.length : 0}
+										</td>
+										<td className="px-6 py-4 whitespace-nowrap flex space-x-4">
+											<button
+												onClick={() => toggleVehicleDetails(vehicle.id)}
+												className={
+													"text-blue-600 hover:text-blue-900 cursor-pointer"
+												}>
+												{expandedVehicleId === vehicle.id
+													? "Hide Details"
+													: "View Details"}
+											</button>
+											<button
+												onClick={() =>
+													vehicle.id && handleDeactivateVehicle(vehicle.id)
+												}
+												disabled={
+													isDeactivating && selectedVehicleId === vehicle.id
+												}
+												className={`text-yellow-600 hover:text-yellow-900 ${
+													isDeactivating && selectedVehicleId === vehicle.id
+														? "opacity-50 cursor-not-allowed"
+														: "cursor-pointer"
+												}`}>
+												{isDeactivating && selectedVehicleId === vehicle.id
+													? "Deactivating..."
+													: "Deactivate Vehicle"}
+											</button>
+										</td>
+									</tr>
+									{vehicle.faults && vehicle.id && (
+										<VehicleDetails
+											faults={vehicle.faults}
+											isExpanded={expandedVehicleId === vehicle.id}
+										/>
+									)}
+								</>
 							))
 						) : (
 							<tr>
