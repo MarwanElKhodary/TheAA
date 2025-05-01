@@ -1,9 +1,10 @@
 "use client";
 
-import { Vehicle, HealthStatus } from "@/app/lib/types";
+import { Vehicle } from "@/app/lib/types";
 import { useState } from "react";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import VehicleDetails from "@/app/components/VehicleDetails";
+import HealthStatusBadge from "@/app/components/HealthStatusBadge";
 import {
 	useCreateVehicle,
 	useDeactivateVehicle,
@@ -54,22 +55,6 @@ export default function VehicleListView() {
 	const toggleVehicleDetails = (id: number | undefined) => {
 		if (!id) return;
 		setExpandedVehicleId(expandedVehicleId === id ? null : id);
-	};
-
-	const getHealthStatusColor = (status: HealthStatus): string => {
-		switch (status) {
-			// ! Use types/interfaces so it's not hardcoded
-			case "Up to Date":
-				return "bg-green-100 text-green-800";
-			case "Action Soon":
-				return "bg-yellow-100 text-yellow-800";
-			case "Action Now":
-				return "bg-orange-100 text-orange-800";
-			case "Off the Road":
-				return "bg-red-100 text-red-800";
-			default:
-				return "bg-gray-100 text-gray-800";
-		}
 	};
 
 	if (isLoading) {
@@ -137,12 +122,9 @@ export default function VehicleListView() {
 											{vehicle.model}
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
-											{/* TODO: This should be a component too */}
-											{/* TODO: Check if "as blah" is normal */}
-											<span
-												className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getHealthStatusColor(vehicle.healthStatus as HealthStatus)}`}>
-												{vehicle.healthStatus}
-											</span>
+											{vehicle.healthStatus && (
+												<HealthStatusBadge status={vehicle.healthStatus} />
+											)}
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
 											{vehicle.faults ? vehicle.faults.length : 0}

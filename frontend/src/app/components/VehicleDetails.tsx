@@ -1,4 +1,5 @@
 import { Fault } from "@/app/lib/types";
+import FaultSeverityBadge from "@/app/components/FaultSeverityBadge";
 
 interface VehicleDetailsProps {
 	faults: Fault[];
@@ -26,17 +27,7 @@ export default function VehicleDetails({
 								<div key={fault.id} className="px-4 py-3 flex justify-between">
 									<div className="flex-1">{fault.description}</div>
 									<div>
-										{/* TODO: Rework severity constants */}
-										<span
-											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-												fault.severity === "HIGH"
-													? "bg-red-100 text-red-800"
-													: fault.severity === "MEDIUM"
-														? "bg-yellow-100 text-yellow-800"
-														: "bg-green-100 text-green-800"
-											}`}>
-											{fault.severity}
-										</span>
+										<FaultSeverityBadge severity={fault.severity} />
 									</div>
 								</div>
 							))}
