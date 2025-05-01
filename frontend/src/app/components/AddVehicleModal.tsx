@@ -47,7 +47,6 @@ export default function AddVehicleModal({
 			await onSubmit({
 				vrn: vrn.trim(),
 				model: model.trim(),
-				healthStatus: "Up to Date", // ! Shouldn't this be typed?
 			});
 
 			handleClose();
