@@ -22,10 +22,7 @@ export async function getVehicleById(id: number): Promise<Vehicle> {
 	return response.json();
 }
 
-// ! What the hell is Omit
-export async function createVehicle(
-	vehicleData: Omit<Vehicle, "id">
-): Promise<Vehicle> {
+export async function createVehicle(vehicleData: Vehicle): Promise<Vehicle> {
 	const response = await fetch(`${API_BASE_URL}/vehicles`, {
 		method: "POST",
 		headers: {

@@ -6,8 +6,10 @@ import { Vehicle } from "@/app/lib/types";
 interface AddVehicleModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	onSubmit: (vehicleData: Omit<Vehicle, "id">) => Promise<void>; // ? Again, what's this Omit?
+	onSubmit: (vehicleData: Vehicle) => Promise<void>; // ? Again, what's this Omit?
 }
+
+// TODO: Provide the user some notification of some sort that the vehicle has been created
 
 export default function AddVehicleModal({
 	isOpen,

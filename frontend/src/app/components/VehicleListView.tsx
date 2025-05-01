@@ -6,10 +6,7 @@ import { deactivateVehicle, createVehicle } from "@/app/lib/api";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import { useVehicles } from "../hooks/api-hooks";
 
-// TODO: Display number of faults as a column
-// TODO: Implement Add New Vehicle
 // TODO: Implement View Vehicle
-// TODO: Implement Deactivate Vehicle
 // ? Should colours be all over the place like this?
 // ? Should each component be its own row?
 // ? Should numFaults be calculated in the backend or front end? Probably backend
@@ -40,7 +37,7 @@ export default function VehicleListView() {
 		}
 	};
 
-	const handleAddVehicle = async (vehicleData: Omit<Vehicle, "id">) => {
+	const handleAddVehicle = async (vehicleData: Vehicle) => {
 		await createVehicle(vehicleData);
 		refetch();
 	};
