@@ -19,7 +19,7 @@ export interface Vehicle {
 	faults?: Fault[];
 }
 
-//TODO: Rework once we add timestamp
+//TODO: Rework once dateOccurred is added
 export interface Fault {
 	id?: number;
 	description: string;

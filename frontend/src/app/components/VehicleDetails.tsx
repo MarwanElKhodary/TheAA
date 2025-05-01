@@ -6,7 +6,7 @@ interface VehicleDetailsProps {
 	isExpanded: boolean;
 }
 
-//TODO: Rework when timeOccurred is implemented in the backend
+//TODO: Rework when dateOccurred is implemented in the backend
 
 export default function VehicleDetails({
 	faults,
