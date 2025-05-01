@@ -44,6 +44,7 @@ export default function VehicleListView() {
 
 	const getHealthStatusColor = (status: HealthStatus): string => {
 		switch (status) {
+			// ! Use types/interfaces so it's not hardcoded
 			case "Up to Date":
 				return "bg-green-100 text-green-800";
 			case "Action Soon":

@@ -1,16 +1,8 @@
 import { Vehicle } from "@/app/lib/types";
 
+//TODO: Refactor into hooks and eventually remove
+
 const API_BASE_URL = "http://localhost:8080";
-
-export async function getVehicles(): Promise<Vehicle[]> {
-	const response = await fetch(`${API_BASE_URL}/vehicles`);
-
-	if (!response.ok) {
-		throw new Error(`Failed to get vehicles: ${response.status}`);
-	}
-
-	return response.json();
-}
 
 export async function getVehicleById(id: number): Promise<Vehicle> {
 	const response = await fetch(`${API_BASE_URL}/vehicles/${id}`);

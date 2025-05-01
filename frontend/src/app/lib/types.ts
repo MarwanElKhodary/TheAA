@@ -1,4 +1,5 @@
 // TODO: Investigate what's option and what's not later
+// ? Look into types, schemas and interfaces and see how you can separate this out
 export type HealthStatus =
 	| "Up to Date"
 	| "Action Soon"
@@ -20,9 +21,10 @@ export interface Fault {
 	id?: number;
 	description: string;
 	severity: FaultSeverity;
-	vehicles?: Vehicle[];
+	vehicles?: Vehicle[]; // ! Delete this it might not make sense
 }
 
+// ! This hasn't been used yet, probably remove
 export interface FaultReportDto {
 	vrn: string;
 	description: string;
