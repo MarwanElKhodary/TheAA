@@ -2,10 +2,10 @@
 
 import { Vehicle, HealthStatus } from "@/app/lib/types";
 import { useState } from "react";
-import { deactivateVehicle, createVehicle } from "@/app/lib/api";
+import { deactivateVehicle } from "@/app/lib/api";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import VehicleDetails from "@/app/components/VehicleDetails";
-import { useVehicles } from "@/app/hooks/api-hooks";
+import { useCreateVehicle, useVehicles } from "@/app/hooks/api-hooks";
 import React from "react";
 
 // ? Should colours be all over the place like this?
@@ -21,6 +21,7 @@ export default function VehicleListView() {
 		null
 	);
 
+	//TODO: Remove refetch after reworking deactivateVehicle
 	const { data: vehicles, isLoading, isError, error, refetch } = useVehicles();
 
 	// TODO: Refactor to use hooks
@@ -41,10 +42,14 @@ export default function VehicleListView() {
 		}
 	};
 
-	// TODO: Refactor to use hooks
+	const { mutate: createVehicle } = useCreateVehicle({
+		onSuccess: () => {
+			setIsModalOpen(false);
+		},
+	});
+
 	const handleAddVehicle = async (vehicleData: Vehicle) => {
-		await createVehicle(vehicleData);
-		refetch();
+		createVehicle(vehicleData);
 	};
 
 	// TODO: Look over this function
