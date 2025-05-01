@@ -1,6 +1,7 @@
 package com.example.theaa.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,13 +10,12 @@ import com.example.theaa.entity.Vehicle;
 import com.example.theaa.service.VehicleService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-// ! None of these apis throw logs when being hit I think currently
 
 @RestController
 public class VehicleController {
@@ -37,13 +37,18 @@ public class VehicleController {
         return vehicleService.createVehicle(vehicle);
     }
 
-    // ? Why would we delete by id like this instead of just submitting the vehicle
-    // ? in the request body like above?
-    // TODO: Change this to be by VRN instead
-    // ! Response is just 200 ok for now
     @DeleteMapping("/vehicles/{id}")
-    public void deactivateVehicle(@PathVariable Long id) {
-        vehicleService.deactivateVehicle(id);
+    public ResponseEntity<Void> deactivateVehicle(@PathVariable Long id) {
+        Optional<Vehicle> vehicle = vehicleService.getVehicleById(id);
+        if (vehicle.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        try {
+            vehicleService.deactivateVehicle(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }
