@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Vehicle } from "@/app/lib/types";
 import VehicleDetails from "@/app/components/VehicleDetails";
-import HealthStatusBadge from "@/app/components/HealthStatusBadge";
+import Badge from "@/app/ui/Badge";
 
 interface VehicleRowProps {
 	vehicle: Vehicle;
@@ -31,7 +31,7 @@ export default function VehicleRow({ vehicle, onDeactivate }: VehicleRowProps) {
 				<td className="px-6 py-4 whitespace-nowrap">{vehicle.model}</td>
 				<td className="px-6 py-4 whitespace-nowrap">
 					{vehicle.healthStatus && (
-						<HealthStatusBadge status={vehicle.healthStatus} />
+						<Badge type="health" value={vehicle.healthStatus} />
 					)}
 				</td>
 				<td className="px-6 py-4 whitespace-nowrap">

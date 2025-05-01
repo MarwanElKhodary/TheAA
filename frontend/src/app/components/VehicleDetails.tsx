@@ -1,5 +1,5 @@
 import { Fault } from "@/app/lib/types";
-import FaultSeverityBadge from "@/app/components/FaultSeverityBadge";
+import Badge from "@/app/ui/Badge";
 
 interface VehicleDetailsProps {
 	faults: Fault[];
@@ -27,7 +27,7 @@ export default function VehicleDetails({
 								<div key={fault.id} className="px-4 py-3 flex justify-between">
 									<div className="flex-1">{fault.description}</div>
 									<div>
-										<FaultSeverityBadge severity={fault.severity} />
+										<Badge type="fault" value={fault.severity} />
 									</div>
 								</div>
 							))}
