@@ -3,9 +3,10 @@ package com.example.theaa.dto;
 public class FaultReportDto {
     private String vrn;
     private String description;
-    private String severity; // ! Could be enum
+    private String severity;
 
     // *** GETTERS AND SETTERS ***
+
     public String getVrn() {
         return vrn;
     }

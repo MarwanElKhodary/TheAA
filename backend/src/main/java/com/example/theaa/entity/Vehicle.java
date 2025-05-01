@@ -67,8 +67,6 @@ public class Vehicle {
 
     // *** METHODS ***
 
-    // TODO: Research if there's a better way of doing this
-    // TODO: Move magic numbers
     public void updateHealthStatus() {
         if (faults.isEmpty()) {
             this.healthStatus = HealthStatus.UP_TO_DATE;
@@ -86,6 +84,7 @@ public class Vehicle {
             }
         }
 
+        // TODO: Replace magic numbers
         if (highCount >= 3) {
             this.healthStatus = HealthStatus.OFF_THE_ROAD;
         } else if (highCount > 0) {

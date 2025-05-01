@@ -34,8 +34,6 @@ public class Fault {
     protected Fault() {
     }
 
-    // TODO: Needs a timestamp of when it happens
-    // TODO: On the views of the faults, need to organize by time of when it happens
     public Fault(String description, FaultSeverity severity) {
         this.description = description;
         this.severity = severity;
