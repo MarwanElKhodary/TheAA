@@ -101,7 +101,7 @@ export default function VehicleListView() {
 				{/* TODO: Should probably be its own component too */}
 				<div
 					onClick={() => setIsModalOpen(true)}
-					className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow cursor-pointer">
+					className="[background-color:var(--brand-yellow)] hover:bg-yellow-300 text-black px-4 py-2 rounded shadow cursor-pointer">
 					Add New Vehicle
 				</div>
 			</div>
@@ -130,7 +130,7 @@ export default function VehicleListView() {
 					<tbody className="bg-white divide-y divide-gray-200">
 						{vehicles && vehicles.length > 0 ? (
 							vehicles.map((vehicle: Vehicle) => (
-								// ? I know this is a react fragment but why is it used here like this?
+								// ! This is causing a "Each child in a list should have a unique "key" prop." error
 								<>
 									<tr key={vehicle.id}>
 										<td className="px-6 py-4 whitespace-nowrap">
