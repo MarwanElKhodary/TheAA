@@ -95,7 +95,7 @@ export default function VehicleListView() {
 				{/* TODO: Should probably be its own component too */}
 				<div
 					// href="/vehicles/new"
-					className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">
+					className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow cursor-pointer">
 					Add New Vehicle
 				</div>
 			</div>
@@ -141,7 +141,7 @@ export default function VehicleListView() {
 										{vehicle.faults ? vehicle.faults.length : 0}
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap flex space-x-4">
-										<button className="text-blue-600 hover:text-blue-900">
+										<button className="text-blue-600 hover:text-blue-900 cursor-pointer">
 											View Details
 										</button>
 										<button
@@ -154,7 +154,7 @@ export default function VehicleListView() {
 											className={`text-yellow-600 hover:text-yellow-900 ${
 												isDeactivating && selectedVehicleId === vehicle.id
 													? "opacity-50 cursor-not-allowed"
-													: ""
+													: "cursor-pointer"
 											}`}>
 											{isDeactivating && selectedVehicleId === vehicle.id
 												? "Deactivating..."
