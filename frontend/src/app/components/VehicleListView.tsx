@@ -3,8 +3,7 @@
 import { Vehicle } from "@/app/lib/types";
 import { useState } from "react";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
-import VehicleDetails from "@/app/components/VehicleDetails";
-import HealthStatusBadge from "@/app/components/HealthStatusBadge";
+import VehicleRow from "@/app/components/VehicleRow";
 import {
 	useCreateVehicle,
 	useDeactivateVehicle,
@@ -21,19 +20,15 @@ export default function VehicleListView() {
 		null
 	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [expandedVehicleId, setExpandedVehicleId] = useState<number | null>(
-		null
-	);
 
 	//TODO: Remove refetch after reworking deactivateVehicle
 	const { data: vehicles, isLoading, isError, error } = useVehicles();
 
-	const { mutate: deactivateVehicle, isPending: isDeactivating } =
-		useDeactivateVehicle({
-			onSuccess: () => {
-				setSelectedVehicleId(null);
-			},
-		});
+	const { mutate: deactivateVehicle } = useDeactivateVehicle({
+		onSuccess: () => {
+			setSelectedVehicleId(null);
+		},
+	});
 
 	const handleDeactivateVehicle = (id: number) => {
 		if (!id) return;
@@ -49,12 +44,6 @@ export default function VehicleListView() {
 
 	const handleAddVehicle = async (vehicleData: Vehicle) => {
 		createVehicle(vehicleData);
-	};
-
-	// TODO: Look over this function, specifically why would id ever be undefined?
-	const toggleVehicleDetails = (id: number | undefined) => {
-		if (!id) return;
-		setExpandedVehicleId(expandedVehicleId === id ? null : id);
 	};
 
 	if (isLoading) {
@@ -112,58 +101,12 @@ export default function VehicleListView() {
 					<tbody className="bg-white divide-y divide-gray-200">
 						{vehicles && vehicles.length > 0 ? (
 							vehicles.map((vehicle: Vehicle) => (
-								// ? What's the point of using React.Fragment here?
-								<React.Fragment key={vehicle.id}>
-									<tr>
-										<td className="px-6 py-4 whitespace-nowrap">
-											{vehicle.vrn}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
-											{vehicle.model}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
-											{vehicle.healthStatus && (
-												<HealthStatusBadge status={vehicle.healthStatus} />
-											)}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
-											{vehicle.faults ? vehicle.faults.length : 0}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap flex space-x-4">
-											<button
-												onClick={() => toggleVehicleDetails(vehicle.id)}
-												className={
-													"text-blue-600 hover:text-blue-900 cursor-pointer"
-												}>
-												{expandedVehicleId === vehicle.id
-													? "Hide Details"
-													: "View Details"}
-											</button>
-											<button
-												onClick={() =>
-													vehicle.id && handleDeactivateVehicle(vehicle.id)
-												}
-												disabled={
-													isDeactivating && selectedVehicleId === vehicle.id
-												}
-												className={`text-yellow-600 hover:text-yellow-900 ${
-													isDeactivating && selectedVehicleId === vehicle.id
-														? "opacity-50 cursor-not-allowed"
-														: "cursor-pointer"
-												}`}>
-												{isDeactivating && selectedVehicleId === vehicle.id
-													? "Deactivating..."
-													: "Deactivate Vehicle"}
-											</button>
-										</td>
-									</tr>
-									{vehicle.faults && vehicle.id && (
-										<VehicleDetails
-											faults={vehicle.faults}
-											isExpanded={expandedVehicleId === vehicle.id}
-										/>
-									)}
-								</React.Fragment>
+								<VehicleRow
+									key={vehicle.id}
+									vehicle={vehicle}
+									onDeactivate={handleDeactivateVehicle}
+									selectedVehicleId={selectedVehicleId}
+								/>
 							))
 						) : (
 							<tr>
