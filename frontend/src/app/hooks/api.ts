@@ -53,4 +53,33 @@ const useCreateVehicle = ({
 	});
 };
 
-export { useVehicles, useCreateVehicle };
+const useDeactivateVehicle = ({
+	onSuccess,
+	onError,
+}: {
+	onSuccess?: () => void;
+	onError?: (error: Error) => void;
+} = {}) => {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (id: number) => {
+			const response = await fetch(`${API_BASE_URL}/vehicles/${id}`, {
+				method: "DELETE",
+			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to deactivate vehicle: ${response.status}`);
+			}
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+			onSuccess?.();
+		},
+		onError: (error) => {
+			onError?.(error as Error);
+		},
+	});
+};
+
+export { useVehicles, useCreateVehicle, useDeactivateVehicle };

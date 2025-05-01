@@ -2,17 +2,20 @@
 
 import { Vehicle, HealthStatus } from "@/app/lib/types";
 import { useState } from "react";
-import { deactivateVehicle } from "@/app/lib/api";
 import AddVehicleModal from "@/app/components/AddVehicleModal";
 import VehicleDetails from "@/app/components/VehicleDetails";
-import { useCreateVehicle, useVehicles } from "@/app/hooks/api-hooks";
+import {
+	useCreateVehicle,
+	useDeactivateVehicle,
+	useVehicles,
+} from "@/app/hooks/api";
 import React from "react";
 
 // ? Should colours be all over the place like this?
 // ? Should each component be its own row?
 
 export default function VehicleListView() {
-	const [isDeactivating, setIsDeactivating] = useState(false);
+	// ? Go over all these useStates to try and understand
 	const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(
 		null
 	);
@@ -22,24 +25,19 @@ export default function VehicleListView() {
 	);
 
 	//TODO: Remove refetch after reworking deactivateVehicle
-	const { data: vehicles, isLoading, isError, error, refetch } = useVehicles();
+	const { data: vehicles, isLoading, isError, error } = useVehicles();
 
-	// TODO: Refactor to use hooks
-	const handleDeactivateVehicle = async (id: number) => {
+	const { mutate: deactivateVehicle, isPending: isDeactivating } =
+		useDeactivateVehicle({
+			onSuccess: () => {
+				setSelectedVehicleId(null);
+			},
+		});
+
+	const handleDeactivateVehicle = (id: number) => {
 		if (!id) return;
-
-		try {
-			setIsDeactivating(true);
-			setSelectedVehicleId(id);
-			await deactivateVehicle(id);
-			// Refetch the vehicles list after deactivation
-			refetch();
-		} catch (error) {
-			console.error("Error deactivating vehicle:", error);
-		} finally {
-			setIsDeactivating(false);
-			setSelectedVehicleId(null);
-		}
+		setSelectedVehicleId(id);
+		deactivateVehicle(id);
 	};
 
 	const { mutate: createVehicle } = useCreateVehicle({
@@ -89,11 +87,6 @@ export default function VehicleListView() {
 					Error loading vehicles:{" "}
 					{error instanceof Error ? error.message : "Unknown error"}
 				</p>
-				<button
-					onClick={() => refetch()}
-					className="mt-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-					Try Again
-				</button>
 			</div>
 		);
 	}
