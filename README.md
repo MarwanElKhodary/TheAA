@@ -18,7 +18,7 @@ A web application to monitor the health status of vehicles, developed with Sprin
 - Next.js 15.3.1
 - React 19.0.0
 - TypeScript
-- TanStack Query for API state management
+- TanStack Query for data fetching
 - Tailwind CSS for styling
 
 ## Installation and Setup
@@ -107,8 +107,7 @@ The frontend will start on <http://localhost:3000>.
 
 - Deactivating a vehicle simply means deleting the vehicle from the database. In a production environment, there might be a deactivated vehicles database instead, with features of reactivation
 - Issuing faults happen one at a time, no bulk faults
-- Issuing faults occurs from different clients submitting `DELETE` requests, the user cannot submit faults from the browser
-- Messages coming into the queue are processed FIFO
+- Issuing faults occurs from different clients submitting `POST` requests, the user cannot submit faults from the browser
 - Race conditions are ignored
 - Faults are processed in a queue right away
 - No internationalization for strings
