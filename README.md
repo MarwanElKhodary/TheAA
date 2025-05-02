@@ -101,7 +101,6 @@ The frontend will start on <http://localhost:3000>.
 
 - H2 Console is available at <http://localhost:8080/h2-console> when the backend is running
 - Sample data is loaded on startup via `data.sql`
-- CORS is configured to allow requests from the frontend
 
 ## Assumptions
 
