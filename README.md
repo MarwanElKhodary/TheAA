@@ -2,6 +2,8 @@
 
 A web application to monitor the health status of vehicles, developed with Spring Boot backend and Next.js frontend.
 
+![Demo video](./demo-crop.gif)
+
 ## Technology Stack
 
 ### Backend
